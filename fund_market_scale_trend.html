@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>基金市场管理规模走势图</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        .chart-container {
+            position: relative;
+            height: 500px;
+            width: 100%;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 基金市场管理规模走势图 (2021-2026)</h1>
+        <div class="chart-container">
+            <canvas id="fundScaleChart"></canvas>
+        </div>
+        <div class="stats">
+            <div class="stat-card">
+                <h3>起始规模 (2021.06)</h3>
+                <div class="value">22,598亿元</div>
+            </div>
+            <div class="stat-card">
+                <h3>最新规模 (2026.06)</h3>
+                <div class="value">36,554亿元</div>
+            </div>
+            <div class="stat-card">
+                <h3>增长金额</h3>
+                <div class="value">+13,956亿元</div>
+            </div>
+            <div class="stat-card">
+                <h3>增长率</h3>
+                <div class="value">+61.8%</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dates = [
+            '2021-06-30', '2021-09-30', '2021-12-31', '2022-03-31', '2022-06-30',
+            '2022-09-30', '2022-12-31', '2023-03-31', '2023-06-30', '2023-09-30',
+            '2023-12-31', '2024-03-31', '2024-06-30', '2024-09-30', '2024-12-31',
+            '2025-03-31', '2025-06-30', '2025-09-30', '2025-12-31', '2026-03-31',
+            '2026-06-17'
+        ];
+
+        const scales = [
+            2259.81, 2342.56, 2544.08, 2478.81, 2632.08,
+            2607.25, 2572.12, 2607.35, 2719.76, 2691.47,
+            2723.42, 2858.11, 3042.58, 3132.85, 3194.12,
+            3129.58, 3354.58, 3541.66, 3655.96, 3613.10,
+            3655.46
+        ];
+
+        const ctx = document.getElementById('fundScaleChart').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: '管理规模（亿元）',
+                    data: scales,
+                    borderColor: '#667eea',
+                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#667eea',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        titleFont: {
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            size: 13
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                return '管理规模: ' + context.parsed.y.toLocaleString() + ' 亿元';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        title: {
+                            display: true,
+                            text: '管理规模（亿元）',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        ticks: {
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: '日期',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
+                        },
+                        ticks: {
+                            maxRotation: 45,
+                            minRotation: 45
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
