@@ -188,8 +188,8 @@ python fund_crawler.py
 
 ## 联系方式
 
-- 项目主页：https://github.com/yourusername/spider-open-fund
-- 问题反馈：https://github.com/yourusername/spider-open-fund/issues
+- 项目主页：https://github.com/goossduck/spider-open-fund
+- 问题反馈：https://github.com/goossduck/spider-open-fund/issues
 
 ## 致谢
 
